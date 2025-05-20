@@ -1,0 +1,46 @@
+Копирование одного значения
+Расширения SSE предоставляют инструкции movd (для копирования 32-разрядных чисел) и movq (для копирования 64-разрядных чисел):
+vmovd xmm, reg32/mem32
+vmovq xmm, reg64/mem64
+vmovd reg32/mem32, xmm
+vmovq reg64/mem64, xmm
+Данные инструкции применяются как для копирования целых чисел, так и чисел с плавающей точкой
+
+
+Копирование чисел с плавающей точкой
+movss: копирует одно 32-разрядное число с плавающей точкой
+movsd: копирует одно 64-разрядное число с плавающей точкой
+
+vmovss xmmn, mem32
+vmovss mem32, xmmn
+vmovss xmmsrc, xmmdest
+vmovsd xmmn, mem64
+vmovsd mem64, xmmn
+vmovsd xmmsrc, xmmdest
+xmmsrc: Источник данных — регистр XMM, из которого берётся значение.
+xmmdest: Назначение — регистр XMM, в который записывается значение.
+
+
+Копирование !выровненых! вектора данных
+align 16      ; гарантируем выравнивание
+vmovaps: копирование набора 32-разрядных чисел
+vmovapd: копирование набора 64-разрядных чисел
+
+vmovaps mem128, xmm
+vmovaps mem256, ymm
+vmovaps xmm, mem128
+vmovaps ymm, mem256
+vmovaps xmmsrc, xmmdest
+
+vmovapd mem128, xmm
+vmovapd mem256, ymm
+vmovapd xmm, mem128
+vmovapd ymm, mem256
+vmovapd xmmsrc, xmmdest
+
+Копирует значение из памяти во все элементы ymm0
+vpbroadcastd ymm0, [value]  
+Для 32-битных целых чисел (int32_t): VPBROADCASTD
+Для 64-битных целых чисел (int64_t): VPBROADCASTQ
+Для 32-битных чисел с плавающей запятой (float): VBROADCASTSS
+Для 64-битных чисел с плавающей запятой (double): VBROADCASTSD
